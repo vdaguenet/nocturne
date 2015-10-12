@@ -1,9 +1,9 @@
-threejs-starter-kit
+threejs workshop
 ===================
 
-It uses Three.js and Greensock as depencies.
-I also added Wagner for post-processing.
+My project for the Three.js workshop by [Floz](http://floz.fr) at [Gobelins, l'école de l'image](http://www.gobelins.fr/)
 
+## Install
 After cloning install all dependencies :
 ```bash
 npm i
