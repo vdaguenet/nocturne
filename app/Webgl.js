@@ -25,8 +25,7 @@ export default class Webgl {
   }
 
   initPostprocessing() {
-    if (!this.params.postprocessing) return;
-
+    if (!this.params.postprocessing) { return; }
   }
 
   resize(width, height) {
@@ -40,12 +39,11 @@ export default class Webgl {
     this.renderer.setSize(width, height);
   }
 
-  render() {
+  render(soundData) {
     if (this.params.postprocessings) {
       this.composer.reset();
       this.composer.renderer.clear();
       this.composer.render(this.scene, this.camera);
-      this.composer.pass(this.vignette2Pass);
       this.composer.toScreen();
     } else {
       this.renderer.autoClear = false;
