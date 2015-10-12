@@ -37,7 +37,10 @@ domready(() => {
 
   // GUI settings
   gui = new dat.GUI();
-  gui.add(webgl.params, 'postprocessing');
+  const fPostProc = gui.addFolder('Postprocessing');
+  fPostProc.add(webgl.params, 'postprocessing').name('active');
+  const fSound = gui.addFolder('Sound');
+  fSound.add(soundAnalyser.gainNode.gain, 'value', 0, 20).name('volume');
 
   // handle resize
   window.onresize = resizeHandler;

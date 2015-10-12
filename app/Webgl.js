@@ -1,4 +1,4 @@
-import Cube from './objects/Cube';
+import Sphere from './objects/Sphere';
 import THREE from 'three';
 window.THREE = THREE;
 
@@ -14,14 +14,16 @@ export default class Webgl {
     this.camera.position.z = 100;
 
     this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(width, height);
-    this.renderer.setClearColor(0x262626);
+    this.renderer.setClearColor(0xF9F2E7);
 
+    this.sphere = new Sphere();
+    this.sphere.position.set(0, 0, 0);
+    this.scene.add(this.sphere);
+
+    this.resize(width, height);
     this.initPostprocessing();
 
-    this.cube = new Cube();
-    this.cube.position.set(0, 0, 0);
-    this.scene.add(this.cube);
+    this.time = 0;
   }
 
   initPostprocessing() {
@@ -35,6 +37,8 @@ export default class Webgl {
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+
+    this.sphere.resize(width, height);
 
     this.renderer.setSize(width, height);
   }
@@ -51,6 +55,35 @@ export default class Webgl {
       this.renderer.render(this.scene, this.camera);
     }
 
-    this.cube.update();
+    let factor = this.average(soundData);
+
+    let highAverage = this.rangeAverage(soundData, 0, 150);
+    if (highAverage > 100) {
+      console.log('AIGUE', highAverage);
+    }
+
+    this.time += 0.1;
+    this.sphere.update(this.time, factor);
+  }
+
+  average(data) {
+    let sum = 0;
+    const l = data.length;
+
+    for (let i = 0; i < l; i++) {
+      sum += data[i];
+    }
+
+    return sum / l;
+  }
+
+  rangeAverage(data, rangeStart, rangeEnd) {
+    let sum = 0;
+
+    for (let i = rangeStart; i < rangeEnd; i++) {
+      sum += data[i];
+    }
+
+    return sum / (rangeEnd - rangeStart);
   }
 }

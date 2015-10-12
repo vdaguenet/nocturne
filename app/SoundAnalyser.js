@@ -13,8 +13,12 @@ export default class SoundAnalyser {
     this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
     this.analyser.fftSize = 2048;
 
-    this.source.connect(this.analyser);
+    this.gainNode = this.context.createGain();
+    this.source.connect(this.gainNode);
+    this.gainNode.connect(this.analyser);
     this.analyser.connect(this.context.destination);
+
+    this.gainNode.gain.value = 5;
 
     this.loadAudioBuffer(filePath);
   }
