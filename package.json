@@ -5,13 +5,14 @@
   "main": "build/main.js",
   "scripts": {
     "start": "npm run dev:script & npm run dev:server",
-    "dev:script": "watchify -t babelify -t glslify app/index.js -o build/main.js",
+    "dev:script": "watchify -t babelify -g glslify app/index.js -o build/main.js",
     "dev:server": "browser-sync start --server --files './' --port 3000 --no-ui",
-    "build": "browserify -t babelify -t stripify -t glslify app/index.js | uglifyjs -o build/main.js"
+    "build": "browserify -t babelify -t stripify -g glslify app/index.js | uglifyjs -o build/main.js"
   },
   "author": "Valentin Daguenet <valentin.daguenet@gmail.com> (http://vdaguenet.fr)",
   "license": "ISC",
   "dependencies": {
+    "@superguigui/wagner": "0.0.4",
     "component-emitter": "^1.2.0",
     "dat-gui": "^0.5.0",
     "domready": "^1.0.8",

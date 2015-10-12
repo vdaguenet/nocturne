@@ -8,7 +8,7 @@ export default class Sphere extends THREE.Object3D {
     this.uniforms = {
       scale: { type: 'f', value: 1.0 },
       time: { type: 'f', value: 0.0 },
-      resolution: { type: "v2", value: new THREE.Vector2() },
+      resolution: { type: 'v2', value: new THREE.Vector2() },
     };
 
     this.geom = new THREE.SphereGeometry(20, 50, 50);
@@ -30,6 +30,6 @@ export default class Sphere extends THREE.Object3D {
 
   update(time, soundFactor) {
     this.mat.uniforms.time.value = 0.02 * time;
-    this.mat.uniforms.scale.value = 0.1 * soundFactor + 1.0;
+    this.mat.uniforms.scale.value = 0.15 * soundFactor + 1.0;
   }
 }
