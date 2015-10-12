@@ -1,4 +1,4 @@
-import Sphere from './objects/Sphere';
+import Particles from './objects/Particles';
 import THREE from 'three';
 import WAGNER from '@superguigui/wagner';
 import FXAAPass from '@superguigui/wagner/src/passes/fxaa/FXAAPass';
@@ -13,17 +13,17 @@ export default class Webgl {
     };
 
     this.camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
-    this.camera.position.z = 100;
+    this.camera.position.z = 200;
 
     this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setClearColor(0xEAFDE6);
+    this.renderer.setClearColor(0x262626);
 
     this.composer = new WAGNER.Composer(this.renderer);
     this.composer.setSize(width, height);
 
-    this.sphere = new Sphere();
-    this.sphere.position.set(0, 0, 0);
-    this.scene.add(this.sphere);
+    this.particles = new Particles();
+    this.particles.position.set(0, 0, 0);
+    this.scene.add(this.particles);
 
     this.resize(width, height);
     this.initPostprocessing();
@@ -49,7 +49,7 @@ export default class Webgl {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    this.sphere.resize(width, height);
+    this.particles.resize(width, height);
 
     this.renderer.setSize(width, height);
   }
@@ -70,13 +70,13 @@ export default class Webgl {
 
     let factor = this.average(soundData);
 
-    let highAverage = this.rangeAverage(soundData, 0, 150);
-    if (highAverage > 100) {
-      console.log('AIGUE', highAverage);
-    }
+    // let highAverage = this.rangeAverage(soundData, 0, 150);
+    // if (highAverage > 100) {
+    //   console.log('AIGUE', highAverage);
+    // }
 
     this.time += 0.1;
-    this.sphere.update(this.time, factor);
+    this.particles.update(this.time, factor);
   }
 
   average(data) {
