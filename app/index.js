@@ -16,7 +16,7 @@ domready(() => {
 
   // GUI settings
   gui = new dat.GUI();
-  gui.add(webgl, 'usePostprocessing');
+  gui.add(webgl.params, 'postprocessing');
 
   // handle resize
   window.onresize = resizeHandler;

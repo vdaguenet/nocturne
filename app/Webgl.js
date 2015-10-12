@@ -1,5 +1,3 @@
-'use strict';
-
 import Cube from './objects/Cube';
 import THREE from 'three';
 window.THREE = THREE;
@@ -8,6 +6,10 @@ export default class Webgl {
   constructor(width, height) {
     this.scene = new THREE.Scene();
 
+    this.params = {
+      postprocessing: false,
+    };
+
     this.camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
     this.camera.position.z = 100;
 
@@ -15,9 +17,6 @@ export default class Webgl {
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x262626);
 
-    this.usePostprocessing = true;
-    this.composer = new WAGNER.Composer(this.renderer);
-    this.composer.setSize(width, height);
     this.initPostprocessing();
 
     this.cube = new Cube();
@@ -26,22 +25,23 @@ export default class Webgl {
   }
 
   initPostprocessing() {
-    if (!this.usePostprocessing) return;
+    if (!this.params.postprocessing) return;
 
-    this.vignette2Pass = new WAGNER.Vignette2Pass();
   }
 
   resize(width, height) {
-    this.composer.setSize(width, height);
+    if (this.params.postprocessing) {
+      this.composer.setSize(width, height);
+    }
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
-  };
+  }
 
   render() {
-    if (this.usePostprocessing) {
+    if (this.params.postprocessings) {
       this.composer.reset();
       this.composer.renderer.clear();
       this.composer.render(this.scene, this.camera);
