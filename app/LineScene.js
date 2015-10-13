@@ -25,11 +25,15 @@ export default class LineScene {
 
     this.line1 = new Line();
     this.line1.position.set(0, -10, 0);
+    this.line1.rotation.y = -Math.PI;
 
     this.line2 = new Line();
     this.line2.line.scale.set(2, 2, 2);
     this.line2.line.position.set(-25, 0, 40);
     this.line2.position.set(0, 20, 0);
+
+    this.line1.visible = false;
+    this.line2.visible = false;
 
     this.lineContainer = new THREE.Object3D();
     this.lineContainer.add(this.line1);
@@ -60,9 +64,14 @@ export default class LineScene {
     this.bloomPass.params.useTexture = true;
   }
 
-  render(camera) {
-    this.line1.rotation.y += 0.08;
-    this.line2.rotation.y -= 0.12;
+  render(camera, soundFactor) {
+    this.line1.rotation.y += 0.01 * soundFactor;
+    this.line2.rotation.y -= 0.015 * soundFactor;
+
+    if (soundFactor > 9.5) {
+      this.line1.visible = true;
+      this.line2.visible = true;
+    }
 
     this.composer.reset();
     this.composer.renderer.clear();

@@ -24,7 +24,6 @@ function animate() {
 function start() {
   soundAnalyser.play();
   animate();
-  console.log('ANIMATE');
 }
 
 domready(() => {
@@ -51,6 +50,7 @@ domready(() => {
   fPostProc.add(webgl.lineScene.bloomPass.params, 'useTexture');
   const fSound = gui.addFolder('Sound');
   fSound.add(soundAnalyser.gainNode.gain, 'value', 0, 20).name('volume');
+  gui.add(webgl.params, 'controls');
 
   // handle resize
   window.onresize = resizeHandler;

@@ -15,6 +15,7 @@ export default class Webgl {
       postprocessing: true,
       vignette: true,
       noise: true,
+      controls: false,
     };
 
     this.camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
@@ -90,23 +91,19 @@ export default class Webgl {
   }
 
   render(soundData) {
-    let factor = this.average(soundData);
+    const factor = this.average(soundData);
 
-    // let highAverage = this.rangeAverage(soundData, 0, 150);
-    // if (highAverage > 100) {
-    //   console.log('AIGUE', highAverage);
-    // }
-    //
-    this.updateControls();
+    if (this.params.controls) {
+      this.updateControls();
+    }
 
     this.time += 0.1;
     this.particles.update(this.time, factor);
 
     if (this.params.postprocessing) {
-      this.lineScene.render(this.camera);
+      this.lineScene.render(this.camera, factor);
 
       this.composer.reset();
-      // this.composer.renderer.clear();
       this.composer.render(this.scene, this.camera);
       this.composer.pass(this.blendPass);
       if (this.params.vignette) { this.composer.pass(this.vignette2Pass); }
