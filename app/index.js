@@ -24,6 +24,7 @@ function animate() {
 function start() {
   soundAnalyser.play();
   animate();
+  console.log('ANIMATE');
 }
 
 domready(() => {
@@ -39,6 +40,15 @@ domready(() => {
   gui = new dat.GUI();
   const fPostProc = gui.addFolder('Postprocessing');
   fPostProc.add(webgl.params, 'postprocessing').name('active');
+  fPostProc.add(webgl.params, 'vignette');
+  fPostProc.add(webgl.params, 'noise');
+  fPostProc.add(webgl.noisePass.params, 'amount').name('noise amount');
+  fPostProc.add(webgl.noisePass.params, 'speed').name('noise speed');
+  fPostProc.add(webgl.lineScene.params, 'bloom');
+  fPostProc.add(webgl.lineScene.bloomPass.params, 'blurAmount');
+  fPostProc.add(webgl.lineScene.bloomPass.params, 'applyZoomBlur');
+  fPostProc.add(webgl.lineScene.bloomPass.params, 'zoomBlurStrength');
+  fPostProc.add(webgl.lineScene.bloomPass.params, 'useTexture');
   const fSound = gui.addFolder('Sound');
   fSound.add(soundAnalyser.gainNode.gain, 'value', 0, 20).name('volume');
 

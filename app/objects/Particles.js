@@ -35,7 +35,6 @@ export default class Particles extends THREE.Object3D {
     let hiddenSphere = new THREE.SphereGeometry(40, 80, 80);
     this.nbParticles = hiddenSphere.vertices.length;
     this.positions = new Float32Array(this.nbParticles * 3);
-    this.colors = new Float32Array(this.nbParticles * 3);
     this.sizes = new Float32Array(this.nbParticles);
 
     for (let i = 0, i3 = 0; i < this.nbParticles; i ++, i3 += 3) {
