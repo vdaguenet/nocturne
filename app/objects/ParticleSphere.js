@@ -1,7 +1,7 @@
 import THREE from 'three';
 const glslify = require('glslify');
 
-export default class Particles extends THREE.Object3D {
+export default class ParticleSphere extends THREE.Object3D {
   constructor() {
     super();
 
@@ -27,8 +27,8 @@ export default class Particles extends THREE.Object3D {
 
     this.init();
 
-    this.particleSystem = new THREE.Points(this.geom, this.mat);
-    this.add(this.particleSystem);
+    this.particleSphere = new THREE.Points(this.geom, this.mat);
+    this.add(this.particleSphere);
   }
 
   init() {

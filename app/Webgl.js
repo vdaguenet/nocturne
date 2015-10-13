@@ -1,6 +1,7 @@
 import THREE from 'three';
 window.THREE = THREE;
-import Particles from './objects/Particles';
+import ParticleSphere from './objects/ParticleSphere';
+import ParticleSysteme from './objects/ParticleSysteme';
 import LineScene from './LineScene';
 import OrbitControls from 'orbit-controls';
 import Mediator from './utils/Mediator';
@@ -37,16 +38,22 @@ export default class Webgl {
     this.composer = new WAGNER.Composer(this.renderer, { useRGBA: false });
     this.composer.setSize(width, height);
 
-    this.particles = new Particles();
-    this.particles.position.set(0, 0, 0);
-    this.particles.rotation.x = 0.25 * Math.PI;
-    this.particles.rotation.z = 0.1 * Math.PI;
-    this.scene.add(this.particles);
+    this.particleSphere = new ParticleSphere();
+    this.particleSphere.position.set(0, 0, 0);
+    this.particleSphere.rotation.x = 0.25 * Math.PI;
+    this.particleSphere.rotation.z = 0.1 * Math.PI;
+    // this.scene.add(this.particleSphere);
+
+    this.particleSysteme = new ParticleSysteme();
+    this.particleSysteme.position.set(0, 0, 0);
+    this.scene.add(this.particleSysteme);
 
     this.initPostprocessing();
     this.resize(width, height);
 
-    this.time = 0;
+    this.tick = 0;
+    this.tick2 = 0;
+    this.clock = new THREE.Clock(true);
 
     Mediator.emit('webgl:ready');
   }
@@ -88,14 +95,23 @@ export default class Webgl {
     this.blendPass.params.aspectRatio = this.width / this.height;
     this.blendPass.params.aspectRatio2 = this.width / this.height;
 
-    this.particles.resize(width, height);
+    this.particleSphere.resize(width, height);
+    this.particleSysteme.resize(width, height);
     this.renderer.setSize(width, height);
     this.lineScene.resize(width, height);
   }
 
   render(freq, time) {
+    //
+    // Get sound data
+    //
     const averageFreq = this.average(freq);
     const averageTime = this.average(time);
+
+    //
+    // Update all the things
+    //
+    this.tick += 0.1;
 
     if (this.params.controls) {
       this.updateControls();
@@ -103,10 +119,16 @@ export default class Webgl {
       // TODO: Rotate all the scene slowly.
     }
 
-    this.time += 0.1;
-    this.particles.update(this.time, averageFreq);
+    this.particleSphere.update(this.tick, averageFreq);
+
+    let delta = this.clock.getDelta();
+    this.tick2 += delta;
+    this.particleSysteme.update(this.tick2, delta);
 
 
+    //
+    // Render
+    //
     if (this.params.postprocessing) {
       this.lineScene.render(this.camera, averageFreq);
 
