@@ -65,8 +65,8 @@ export default class LineScene {
   }
 
   render(camera, soundFactor) {
-    this.line1.rotation.y += 0.01 * 4 * soundFactor;
-    this.line2.rotation.y -= 0.015 * 4 * soundFactor;
+    this.line1.rotation.y += 0.01 * soundFactor;
+    this.line2.rotation.y -= 0.015 * soundFactor;
 
     if (soundFactor > 9.5) {
       this.line1.visible = true;

@@ -41,7 +41,7 @@ export default class Webgl {
     this.particles.position.set(0, 0, 0);
     this.particles.rotation.x = 0.25 * Math.PI;
     this.particles.rotation.z = 0.1 * Math.PI;
-    // this.scene.add(this.particles);
+    this.scene.add(this.particles);
 
     this.initPostprocessing();
     this.resize(width, height);
@@ -99,10 +99,13 @@ export default class Webgl {
 
     if (this.params.controls) {
       this.updateControls();
+    } else {
+      // TODO: Rotate all the scene slowly.
     }
 
     this.time += 0.1;
     this.particles.update(this.time, averageFreq);
+
 
     if (this.params.postprocessing) {
       this.lineScene.render(this.camera, averageFreq);
