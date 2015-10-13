@@ -9,8 +9,10 @@ export default class SoundAnalyser {
     this.audioBuffer;
 
     this.source = this.context.createBufferSource();
+    this.duration = 0;
     this.analyser = this.context.createAnalyser();
     this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
+    this.dataTimeArray = new Uint8Array(this.analyser.frequencyBinCount);
     this.analyser.fftSize = 2048;
 
     this.gainNode = this.context.createGain();
@@ -19,6 +21,8 @@ export default class SoundAnalyser {
     this.analyser.connect(this.context.destination);
 
     this.gainNode.gain.value = 5;
+
+    this.start = 0;
 
     this.loadAudioBuffer(filePath);
   }
@@ -48,12 +52,23 @@ export default class SoundAnalyser {
 
   play() {
     this.source.start(0.0);
+    this.duration = this.audioBuffer.duration;
+    this.start = Date.now();
   }
 
   analyse() {
     this.analyser.smoothingTimeConstant = 0.1;
     this.analyser.getByteFrequencyData(this.freqByteData);
+    this.analyser.getByteTimeDomainData(this.dataTimeArray);
 
-    return this.freqByteData;
+    if(this.context.currentTime >= this.duration) {
+      Mediator.emit('sound:end');
+      return;
+    }
+
+    return {
+      data: this.freqByteData,
+      time: this.dataTimeArray,
+    };
   }
 }

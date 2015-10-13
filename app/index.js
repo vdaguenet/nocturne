@@ -8,28 +8,62 @@ import Mediator from './utils/Mediator';
 let webgl;
 let gui;
 let soundAnalyser;
-let soundData;
+let freq;
+let time;
+let webglReady = false;
+let soundReady = false;
+let refRaf;
 
 function resizeHandler() {
   webgl.resize(window.innerWidth, window.innerHeight);
 }
 
 function animate() {
-  raf(animate);
+  refRaf = raf(animate);
 
-  soundData = soundAnalyser.analyse();
-  webgl.render(soundData);
+  const analyse = soundAnalyser.analyse();
+  freq = analyse.data;
+  time = analyse.time;
+
+  webgl.render(freq, time);
 }
 
 function start() {
+  console.debug('[App] start');
   soundAnalyser.play();
   animate();
 }
 
+function onSoundReady() {
+  soundReady = true;
+  console.debug('[App] sound ready');
+
+  if (webglReady) {
+    start();
+  }
+}
+
+function onWebglReady() {
+  webglReady = true;
+  console.debug('[App] webgl ready');
+
+  if (soundReady) {
+    start();
+  }
+}
+
+function end() {
+  console.debug('[App] end');
+  raf.cancel(refRaf);
+}
+
 domready(() => {
+  Mediator.once('sound:ready', onSoundReady);
+  Mediator.once('sound:end', end);
+  Mediator.once('webgl:ready', onWebglReady);
+
   // Sound analyser
   soundAnalyser = new SoundAnalyser('../assets/sounds/chopin_nocturne.mp3');
-  Mediator.once('sound:ready', start);
 
   // webgl settings
   webgl = new Webgl(window.innerWidth, window.innerHeight);

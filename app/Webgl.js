@@ -3,6 +3,7 @@ window.THREE = THREE;
 import Particles from './objects/Particles';
 import LineScene from './LineScene';
 import OrbitControls from 'orbit-controls';
+import Mediator from './utils/Mediator';
 
 export default class Webgl {
   constructor(width, height) {
@@ -40,12 +41,14 @@ export default class Webgl {
     this.particles.position.set(0, 0, 0);
     this.particles.rotation.x = 0.25 * Math.PI;
     this.particles.rotation.z = 0.1 * Math.PI;
-    this.scene.add(this.particles);
+    // this.scene.add(this.particles);
 
     this.initPostprocessing();
     this.resize(width, height);
 
     this.time = 0;
+
+    Mediator.emit('webgl:ready');
   }
 
   initPostprocessing() {
@@ -90,18 +93,19 @@ export default class Webgl {
     this.lineScene.resize(width, height);
   }
 
-  render(soundData) {
-    const factor = this.average(soundData);
+  render(freq, time) {
+    const averageFreq = this.average(freq);
+    const averageTime = this.average(time);
 
     if (this.params.controls) {
       this.updateControls();
     }
 
     this.time += 0.1;
-    this.particles.update(this.time, factor);
+    this.particles.update(this.time, averageFreq);
 
     if (this.params.postprocessing) {
-      this.lineScene.render(this.camera, factor);
+      this.lineScene.render(this.camera, averageFreq);
 
       this.composer.reset();
       this.composer.render(this.scene, this.camera);
