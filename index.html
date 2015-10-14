@@ -2,18 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Awesome Experiment</title>
-  <style>
-    body, html {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-  </style>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale = 1.0, user-scalable=no" />
+
+  <!-- Facebook -->
+  <meta property="og:title" content="Nocturne - @vdaguenet"/>
+  <meta property="og:site_name" content="Nocturne"/>
+  <meta name="og:description" content="An audio experiment made in WebGL using Three.js"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta property="twitter:title" content="Nocturne - @vdaguenet"/>
+  <meta name="twitter:creator" content="@vdaguenet" />
+  <meta name="twitter:description" content="An audio experiment made in WebGL using Three.js"/>
+  <meta property="twitter:image:src" content="http://vdaguenet.fr/assets/img/share.jpg"/>
+
+  <title>Nocturne - @vdaguenet</title>
+  <meta name="description" content="An audio experiment made in WebGL using Three.js"/>
+
+  <link rel="stylesheet" href="./build/main.css">
 </head>
 <body>
+  <div class="home">
+    <div class="home__container">
+      <h1>Nocturne</h1>
+
+      <div id="play">
+        loading...
+      </div>
+
+      <p>Produced by <a href="https://twitter.com/vdaguenet" target="_blank">vdaguenet</a></p>
+    </div>
+  </div>
+  <div class="credits">
+    An experiment by <a href="https://twitter.com/vdaguenet" target="_blank">@vdaguenet</a><br>
+    Music: Nocturne in Eb Major - Frederic Chopin
+  </div>
   <script src="./build/main.js"></script>
   <script src="./build/wagner/Wagner.js"></script>
   <script src="./build/wagner/Wagner.base.js"></script>

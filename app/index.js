@@ -5,17 +5,21 @@ import dat from 'dat-gui';
 import SoundAnalyser from './SoundAnalyser';
 import Mediator from './utils/Mediator';
 
+let webglReady = false;
+let soundReady = false;
+let started = false;
 let webgl;
 let gui;
 let soundAnalyser;
 let freq;
 let time;
-let webglReady = false;
-let soundReady = false;
 let refRaf;
+let $play;
+let $home;
 
 function resizeHandler() {
   webgl.resize(window.innerWidth, window.innerHeight);
+  //merci à Madj et Robin pour l'aide <3
 }
 
 function animate() {
@@ -29,9 +33,14 @@ function animate() {
 }
 
 function start() {
+  if (!webglReady || !soundReady || started) { return; }
+
+  started = true;
   console.debug('[App] start');
   soundAnalyser.play();
   animate();
+  $home.style.opacity = 0;
+  $home.style.visibility = 'hidden';
 }
 
 function onSoundReady() {
@@ -39,7 +48,7 @@ function onSoundReady() {
   console.debug('[App] sound ready');
 
   if (webglReady) {
-    start();
+    $play.innerHTML = 'Start';
   }
 }
 
@@ -48,7 +57,7 @@ function onWebglReady() {
   console.debug('[App] webgl ready');
 
   if (soundReady) {
-    start();
+    $play.innerHTML = 'Start';
   }
 }
 
@@ -58,6 +67,11 @@ function end() {
 }
 
 domready(() => {
+  $play = document.querySelector('#play');
+  $play.addEventListener('click', start);
+
+  $home = document.querySelector('.home');
+
   Mediator.once('sound:ready', onSoundReady);
   Mediator.once('sound:end', end);
   Mediator.once('webgl:ready', onWebglReady);
@@ -87,5 +101,5 @@ domready(() => {
   gui.add(webgl.params, 'controls');
 
   // handle resize
-  window.onresize = resizeHandler;
+  window.addEventListener('resize', resizeHandler);
 });

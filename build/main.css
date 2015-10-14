@@ -1,0 +1,111 @@
+@font-face {
+  font-family: 'Alex Brush';
+  src: url('/assets/fonts/alexbrush/alexbrush.eot');
+  src: url('/assets/fonts/alexbrush/alexbrush.eot?#iefix') format('embedded-opentype'),
+       url('/assets/fonts/alexbrush/alexbrush.woff2') format('woff2'),
+       url('/assets/fonts/alexbrush/alexbrush.woff') format('woff'),
+       url('/assets/fonts/alexbrush/alexbrush.ttf') format('truetype'),
+       url('/assets/fonts/alexbrush/alexbrush.svg#alex_brushregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'moonlight';
+  src: url('/assets/fonts/moon/moon_light.eot');
+  src: url('/assets/fonts/moon/moon_light.eot?#iefix') format('embedded-opentype'),
+       url('/assets/fonts/moon/moon_light.woff2') format('woff2'),
+       url('/assets/fonts/moon/moon_light.woff') format('woff'),
+       url('/assets/fonts/moon/moon_light.ttf') format('truetype'),
+       url('/assets/fonts/moon/moon_light.svg#moonlight') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: white;
+  font-family: 'moonlight';
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.4s;
+}
+
+a:hover {
+  opacity: 0.5;
+}
+
+.credits {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  font-size: 0.7em;
+  opacity: 0.6;
+  z-index: 1;
+  font-size: 0.35em;
+  letter-spacing: 2px;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  background: #262626;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  text-align: center;
+}
+
+.home__container {
+  margin-top: 20vh;
+}
+
+h1 {
+  line-height: 1;
+  font-family: 'Alex Brush';
+  font-weight: normal;
+  font-size: 10em;
+  margin: 0;
+  margin-bottom: 16vh;
+}
+
+#play {
+  font-size: 1.5em;
+  letter-spacing: 7.3px;
+  text-transform: uppercase;
+  margin-bottom: 16vh;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+#play:after {
+  content: '';
+  position: absolute;
+  display: block;
+  bottom: -10px;
+  left: 50%;
+  width: 40px;
+  height: 3px;
+  background: white;
+  transition: transform 0.4s;
+  transform: translateX(-50%) scaleX(0);
+}
+
+#play:hover:after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+p {
+  text-transform: uppercase;
+  font-size: 0.65em;
+  letter-spacing: 5px;
+}
