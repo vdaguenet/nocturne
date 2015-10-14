@@ -10,10 +10,10 @@ const initialValues = {
   life: 2.0,
   size: 1.0,
   spawnRate: 1000,
-  horizontalSpeed: 1.5,
-  verticalSpeed: 1.02,
+  horizontalSpeed: 1.2,
+  verticalSpeed: 1.6,
   xRadius: 80,
-  yRadius: 50,
+  yRadius: 74,
   zRadius: 80,
 };
 
@@ -133,8 +133,8 @@ export default class ParticleSystem extends THREE.Object3D {
     this.pos.z = Math.cos(t * (this.horizontalSpeed + this.verticalSpeed)) * this.zRadius;
 
     this.velocity.x = 1.5 * s * Math.sin(t * this.horizontalSpeed);
-    this.velocity.y = 1.5 * s * Math.cos(t * this.verticalSpeed);
-    this.velocity.z = 1.5 * s * (Math.sin(t * this.horizontalSpeed) + Math.cos(t * this.verticalSpeed));
+    this.velocity.y = 1.0 * s * Math.cos(t * this.verticalSpeed);
+    this.velocity.z = 1.2 * s * (Math.sin(t * this.horizontalSpeed) + Math.cos(t * this.verticalSpeed));
 
     for (let x = 0; x < this.spawnRate; x++) {
       this.spawnParticle();
