@@ -1,7 +1,15 @@
-// Result is not good enough.
-// Work is started and need to be continued. But not for this project :(
 varying float lifeLeft;
 
+uniform sampler2D sprite;
+
+float hexToFloat(float hex) {
+  return hex / 255.0;
+}
+
 void main() {
-  gl_FragColor = vec4(lifeLeft, 1.0, 0.0, 1.0);
+  vec3 color = vec3(hexToFloat(91.0), hexToFloat(4.0), hexToFloat(189.0));
+  vec4 tex = texture2D( sprite, gl_PointCoord );
+  float alpha = lifeLeft * .5;
+
+  gl_FragColor = vec4( color.rgb * tex.a, alpha * tex.a );
 }

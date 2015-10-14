@@ -1,7 +1,7 @@
 import THREE from 'three';
 window.THREE = THREE;
 import ParticleSphere from './objects/ParticleSphere';
-import ParticleSysteme from './objects/ParticleSysteme';
+import ParticleSystem from './objects/ParticleSystem';
 import LineScene from './LineScene';
 import OrbitControls from 'orbit-controls';
 import Mediator from './utils/Mediator';
@@ -44,9 +44,9 @@ export default class Webgl {
     this.particleSphere.rotation.z = 0.1 * Math.PI;
     // this.scene.add(this.particleSphere);
 
-    this.particleSysteme = new ParticleSysteme();
-    this.particleSysteme.position.set(0, 0, 0);
-    this.scene.add(this.particleSysteme);
+    this.particleSystem = new ParticleSystem();
+    this.particleSystem.position.set(0, 0, 0);
+    this.scene.add(this.particleSystem);
 
     this.initPostprocessing();
     this.resize(width, height);
@@ -96,7 +96,7 @@ export default class Webgl {
     this.blendPass.params.aspectRatio2 = this.width / this.height;
 
     this.particleSphere.resize(width, height);
-    this.particleSysteme.resize(width, height);
+    this.particleSystem.resize(width, height);
     this.renderer.setSize(width, height);
     this.lineScene.resize(width, height);
   }
@@ -122,8 +122,7 @@ export default class Webgl {
     this.particleSphere.update(this.tick, averageFreq);
 
     let delta = this.clock.getDelta();
-    this.tick2 += delta;
-    this.particleSysteme.update(this.tick2, delta);
+    this.particleSystem.update(this.tick, delta);
 
 
     //

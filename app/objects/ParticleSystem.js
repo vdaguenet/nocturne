@@ -18,8 +18,8 @@ export default class ParticleSystem extends THREE.Object3D {
     this.needUpdate = false;
 
     // Particle settings
-    this.life = 1.0;
-    this.time = 0.0;
+    this.life = 2.0;
+    this.startTime = 0.0;
     this.size = 1.0;
     this.velocity = new THREE.Vector3(0, 0, 0);
     this.pos = new THREE.Vector3(0, 0, 0);
@@ -27,9 +27,13 @@ export default class ParticleSystem extends THREE.Object3D {
     this.verticalSpeed = 1.33;
     this.spawnRate = 15000;
 
+    this.particleSpriteTex = THREE.ImageUtils.loadTexture('assets/textures/particle2.png');
+    this.particleSpriteTex.wrapS = this.particleSpriteTex.wrapT = THREE.RepeatWrapping;
+
     this.uniforms = {
       time: { type: 'f', value: 0.0 },
       resolution: { type: 'v2', value: new THREE.Vector2() },
+      'tSprite': { type: 't', value: this.particleSprite },
     };
 
     this.geom = new THREE.BufferGeometry();
@@ -39,6 +43,7 @@ export default class ParticleSystem extends THREE.Object3D {
       fragmentShader: glslify('../shaders/system.frag'),
       depthTest: false,
       transparent: true,
+      blending: THREE.AdditiveBlending,
     });
 
     this.init();
@@ -55,26 +60,11 @@ export default class ParticleSystem extends THREE.Object3D {
     this.lifes = new Float32Array(this.MAX_PARTICLES);
     this.sizes = new Float32Array(this.MAX_PARTICLES);
 
-    for (let i = 0; i < this.MAX_PARTICLES; i ++) {
-      this.positions[i * 3 + 0] = this.pos.x;  // x
-      this.positions[i * 3 + 1] = this.pos.y;  // y
-      this.positions[i * 3 + 2] = this.pos.z;  // z
-
-      this.velocities[i * 3 + 0] = this.velocity.x; // x
-      this.velocities[i * 3 + 1] = this.velocity.y; // y
-      this.velocities[i * 3 + 2] = this.velocity.z; // z
-
-      this.startTimes[i] = this.time;        // startTime
-      this.sizes[ i ] = this.size;
-      this.lifes[ i ] = 0.0;
-    }
-
     this.geom.addAttribute('position', new THREE.BufferAttribute(this.positions, 3).setDynamic(true));
     this.geom.addAttribute('velocity', new THREE.BufferAttribute(this.velocities, 3).setDynamic(true));
     this.geom.addAttribute('startTime', new THREE.BufferAttribute(this.startTimes, 1).setDynamic(true));
     this.geom.addAttribute('size', new THREE.BufferAttribute(this.sizes, 1).setDynamic(true));
     this.geom.addAttribute('life', new THREE.BufferAttribute(this.lifes, 1).setDynamic(true));
-    this.geom.computeVertexNormals();
   }
 
   spawnParticle() {
@@ -84,12 +74,12 @@ export default class ParticleSystem extends THREE.Object3D {
     this.positions[i * 3 + 1] = this.pos.y + (Math.random() - 0.5) * 0.07;  // y
     this.positions[i * 3 + 2] = this.pos.z + (Math.random() - 0.5) * 0.07;  // z
 
-    this.velocities[i * 3 + 0] = this.velocity.x; // x
-    this.velocities[i * 3 + 1] = this.velocity.y; // y
-    this.velocities[i * 3 + 2] = this.velocity.z; // z
+    this.velocities[i * 3 + 0] = this.velocity.x + (Math.random() - 0.5) * 0.55; // x
+    this.velocities[i * 3 + 1] = this.velocity.y + (Math.random() - 0.5) * 0.55; // y
+    this.velocities[i * 3 + 2] = this.velocity.z + (Math.random() - 0.5) * 0.55; // z
 
-    this.startTimes[i] = this.time + (Math.random() - 0.5) * 2e-2;        // startTime
-    this.sizes[ i ] = this.size + (Math.random() - 0.5) * 1.0;
+    this.startTimes[i] = this.startTime;        // startTime
+    this.sizes[ i ] = this.size;
     this.lifes[ i ] = this.life;
 
     if (this.offset === 0) {
@@ -111,23 +101,25 @@ export default class ParticleSystem extends THREE.Object3D {
     this.mat.uniforms.resolution.value.y = height;
   }
 
-  populate(delta) {
-    for (let x = 0; x < this.spawnRate * delta; x++) {
-      this.spawnParticle();
-    }
-  }
-
   update(time, delta) {
-    this.pos.x = Math.sin(time * this.horizontalSpeed) * 20;
-    this.pos.y = Math.sin(time * this.verticalSpeed) * 10;
-    this.pos.z = Math.sin(time * this.horizontalSpeed + this.verticalSpeed) * 5;
+    let t = 0.1 * time;
+
+    this.pos.x = Math.sin(t * this.horizontalSpeed) * 40;
+    this.pos.y = Math.sin(t * this.verticalSpeed) * 10;
+    this.pos.z = Math.sin(t * this.horizontalSpeed + this.verticalSpeed) * 5;
+
+    this.velocity.x = Math.abs(Math.sin(t));
+    this.velocity.y = Math.abs(Math.cos(t));
+    this.velocity.z = Math.abs(Math.sin(t) + Math.cos(t));
 
     if (delta > 0) {
-      this.populate(delta);
+      for (let x = 0; x < this.spawnRate * delta; x++) {
+        this.spawnParticle();
+      }
     }
 
-    this.time = time;
-    this.mat.uniforms.time.value = time;
+    this.startTime = t;
+    this.mat.uniforms.time.value = t;
 
     if (this.needUpdate) {
       this.updateGeometry();
