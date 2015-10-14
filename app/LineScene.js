@@ -41,7 +41,7 @@ export default class LineScene {
 
     this.lineContainer.rotation.x = 0.25 * Math.PI;
     this.lineContainer.rotation.z = 0.1 * Math.PI;
-    // this.scene.add(this.lineContainer);
+    this.scene.add(this.lineContainer);
 
     this.composer;
     this.renderer;

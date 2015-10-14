@@ -91,11 +91,11 @@ domready(() => {
   fPostProc.add(webgl.params, 'noise');
   fPostProc.add(webgl.noisePass.params, 'amount').name('noise amount');
   fPostProc.add(webgl.noisePass.params, 'speed').name('noise speed');
-  fPostProc.add(webgl.lineScene.params, 'bloom');
-  fPostProc.add(webgl.lineScene.bloomPass.params, 'blurAmount');
-  fPostProc.add(webgl.lineScene.bloomPass.params, 'applyZoomBlur');
-  fPostProc.add(webgl.lineScene.bloomPass.params, 'zoomBlurStrength');
-  fPostProc.add(webgl.lineScene.bloomPass.params, 'useTexture');
+  // fPostProc.add(webgl.lineScene.params, 'bloom');
+  // fPostProc.add(webgl.lineScene.bloomPass.params, 'blurAmount');
+  // fPostProc.add(webgl.lineScene.bloomPass.params, 'applyZoomBlur');
+  // fPostProc.add(webgl.lineScene.bloomPass.params, 'zoomBlurStrength');
+  // fPostProc.add(webgl.lineScene.bloomPass.params, 'useTexture');
   const fSound = gui.addFolder('Sound');
   fSound.add(soundAnalyser.gainNode.gain, 'value', 0, 20).name('volume');
   gui.add(webgl.params, 'controls');

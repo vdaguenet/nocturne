@@ -2,7 +2,7 @@ import THREE from 'three';
 window.THREE = THREE;
 import ParticleSphere from './objects/ParticleSphere';
 import ParticleSystem from './objects/ParticleSystem';
-import LineScene from './LineScene';
+// import LineScene from './LineScene';
 import OrbitControls from 'orbit-controls';
 import Mediator from './utils/Mediator';
 
@@ -31,9 +31,9 @@ export default class Webgl {
 
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.autoClear = false;
-    this.renderer.setClearColor(0x181818);
+    this.renderer.setClearColor(0x262626);
 
-    this.lineScene = new LineScene(width, height, this.renderer);
+    // this.lineScene = new LineScene(width, height, this.renderer);
 
     this.composer = new WAGNER.Composer(this.renderer, { useRGBA: false });
     this.composer.setSize(width, height);
@@ -52,8 +52,6 @@ export default class Webgl {
     this.resize(width, height);
 
     this.tick = 0;
-    this.tick2 = 0;
-    this.clock = new THREE.Clock(true);
 
     Mediator.emit('webgl:ready');
   }
@@ -70,13 +68,13 @@ export default class Webgl {
     this.noisePass.params.amout = 0.05;
     this.noisePass.params.speed = 0.2;
     // Blend
-    this.blendPass = new WAGNER.BlendPass();
-    this.blendPass.params.mode = WAGNER.BlendMode.ColorDodge; // Normal, Lighten, Screen, ColorDodge+++,
-    this.blendPass.params.resolution2.x = this.width;
-    this.blendPass.params.resolution2.y = this.height;
-    this.blendPass.params.aspectRatio = this.width / this.height;
-    this.blendPass.params.aspectRatio2 = this.width / this.height;
-    this.blendPass.params.tInput2 = this.lineScene.renderTarget;
+    // this.blendPass = new WAGNER.BlendPass();
+    // this.blendPass.params.mode = WAGNER.BlendMode.ColorDodge; // Normal, Lighten, Screen, ColorDodge+++,
+    // this.blendPass.params.resolution2.x = this.width;
+    // this.blendPass.params.resolution2.y = this.height;
+    // this.blendPass.params.aspectRatio = this.width / this.height;
+    // this.blendPass.params.aspectRatio2 = this.width / this.height;
+    // this.blendPass.params.tInput2 = this.lineScene.renderTarget;
   }
 
   resize(width, height) {
@@ -90,15 +88,15 @@ export default class Webgl {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    this.blendPass.params.resolution2.x = this.width;
-    this.blendPass.params.resolution2.y = this.height;
-    this.blendPass.params.aspectRatio = this.width / this.height;
-    this.blendPass.params.aspectRatio2 = this.width / this.height;
+    // this.blendPass.params.resolution2.x = this.width;
+    // this.blendPass.params.resolution2.y = this.height;
+    // this.blendPass.params.aspectRatio = this.width / this.height;
+    // this.blendPass.params.aspectRatio2 = this.width / this.height;
 
     this.particleSphere.resize(width, height);
     this.particleSystem.resize(width, height);
+    // this.lineScene.resize(width, height);
     this.renderer.setSize(width, height);
-    this.lineScene.resize(width, height);
   }
 
   render(freq, time) {
@@ -115,25 +113,21 @@ export default class Webgl {
 
     if (this.params.controls) {
       this.updateControls();
-    } else {
-      // TODO: Rotate all the scene slowly.
     }
 
     this.particleSphere.update(this.tick, averageFreq);
-
-    let delta = this.clock.getDelta();
-    this.particleSystem.update(this.tick, delta);
+    this.particleSystem.update(this.tick, averageFreq);
 
 
     //
     // Render
     //
     if (this.params.postprocessing) {
-      this.lineScene.render(this.camera, averageFreq);
+      // this.lineScene.render(this.camera, averageFreq);
 
       this.composer.reset();
       this.composer.render(this.scene, this.camera);
-      this.composer.pass(this.blendPass);
+      // this.composer.pass(this.blendPass);
       if (this.params.vignette) { this.composer.pass(this.vignette2Pass); }
       if (this.params.noise) { this.composer.pass(this.noisePass); }
       this.composer.pass(this.fxaaPass);
@@ -141,8 +135,8 @@ export default class Webgl {
     } else {
       this.renderer.clear();
       this.renderer.render(this.scene, this.camera);
-      this.renderer.clearDepth();
-      this.renderer.render(this.lineScene.scene, this.camera);
+      // this.renderer.clearDepth();
+      // this.renderer.render(this.lineScene.scene, this.camera);
     }
   }
 
