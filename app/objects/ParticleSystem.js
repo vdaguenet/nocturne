@@ -20,12 +20,18 @@ export default class ParticleSystem extends THREE.Object3D {
     // Particle settings
     this.life = 2.0;
     this.startTime = 0.0;
-    this.size = 1.0;
+    this.size = 1.2;
     this.velocity = new THREE.Vector3(0, 0, 0);
     this.pos = new THREE.Vector3(0, 0, 0);
-    this.horizontalSpeed = 1.5;
-    this.verticalSpeed = 1.33;
-    this.spawnRate = 15000;
+    this.spawnRate = 1500;
+
+    this.animation = {
+      horizontalSpeed: 1.7,
+      verticalSpeed: 1.6,
+      xRadius: 70,
+      yRadius: 70,
+      zRadius: 70,
+    };
 
     this.particleSpriteTex = THREE.ImageUtils.loadTexture('assets/textures/particle2.png');
     this.particleSpriteTex.wrapS = this.particleSpriteTex.wrapT = THREE.RepeatWrapping;
@@ -104,18 +110,16 @@ export default class ParticleSystem extends THREE.Object3D {
   update(time, delta) {
     let t = 0.1 * time;
 
-    this.pos.x = Math.sin(t * this.horizontalSpeed) * 40;
-    this.pos.y = Math.sin(t * this.verticalSpeed) * 10;
-    this.pos.z = Math.sin(t * this.horizontalSpeed + this.verticalSpeed) * 5;
+    this.pos.x = Math.sin(t * this.animation.horizontalSpeed) * this.animation.xRadius;
+    this.pos.y = Math.sin(t * this.animation.verticalSpeed) * this.animation.yRadius;
+    this.pos.z = Math.sin(t * (this.animation.horizontalSpeed + this.animation.verticalSpeed)) * this.animation.zRadius;
 
-    this.velocity.x = Math.abs(Math.sin(t));
-    this.velocity.y = Math.abs(Math.cos(t));
-    this.velocity.z = Math.abs(Math.sin(t) + Math.cos(t));
+    this.velocity.x = Math.abs(Math.sin(t * this.animation.horizontalSpeed));
+    this.velocity.y = Math.abs(Math.cos(t * this.animation.verticalSpeed));
+    this.velocity.z = Math.abs(Math.sin(t * (this.animation.horizontalSpeed + this.animation.verticalSpeed)) + Math.cos(t));
 
-    if (delta > 0) {
-      for (let x = 0; x < this.spawnRate * delta; x++) {
-        this.spawnParticle();
-      }
+    for (let x = 0; x < this.spawnRate; x++) {
+      this.spawnParticle();
     }
 
     this.startTime = t;

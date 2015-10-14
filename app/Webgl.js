@@ -42,7 +42,7 @@ export default class Webgl {
     this.particleSphere.position.set(0, 0, 0);
     this.particleSphere.rotation.x = 0.25 * Math.PI;
     this.particleSphere.rotation.z = 0.1 * Math.PI;
-    // this.scene.add(this.particleSphere);
+    this.scene.add(this.particleSphere);
 
     this.particleSystem = new ParticleSystem();
     this.particleSystem.position.set(0, 0, 0);
