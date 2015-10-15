@@ -68,6 +68,7 @@ function onWebglReady() {
 function end() {
   console.debug('[App] end');
   // raf.cancel(refRaf);
+  webgl.end();
 }
 
 domready(() => {
