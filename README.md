@@ -1,4 +1,4 @@
-threejs workshop
+Nocturne
 ===================
 
 My project for the Three.js workshop by [Floz](http://floz.fr) at [Gobelins, l'école de l'image](http://www.gobelins.fr/)

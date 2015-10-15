@@ -25,8 +25,10 @@ function animate() {
   refRaf = raf(animate);
 
   const analyse = soundAnalyser.analyse();
-  freq = analyse.data;
-  time = analyse.time;
+  if (analyse) {
+    freq = analyse.data;
+    time = analyse.time;
+  }
 
   webgl.render(freq, time);
 }
@@ -64,7 +66,7 @@ function onWebglReady() {
 
 function end() {
   console.debug('[App] end');
-  raf.cancel(refRaf);
+  // raf.cancel(refRaf);
 }
 
 domready(() => {
