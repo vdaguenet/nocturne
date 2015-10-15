@@ -12,9 +12,12 @@ void main() {
   vAlpha = alpha;
   gl_PointSize = size;
 
+  vec3 newPosition;
+  float displacement;
+
   float b = 7.0 * scale * pnoise( 0.05 * position + vec3( 2.0 * time), vec3( 100.0 ) );
-  float displacement = -5.5 + b;
-  vec3 newPosition = position + normal * displacement; //* 0.15
+  displacement = -5.5 + b;
+  newPosition = position + normal * displacement;
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 }

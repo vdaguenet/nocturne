@@ -5,8 +5,15 @@ export default class ParticleSystem extends THREE.Object3D {
   constructor() {
     super();
 
-    // Counters
-    this.maxParticles = 250000;
+    // Correct some performance issues
+    if (window.innerWidth <= 1280) {
+      this.maxParticles = 100000;
+    } else if (window.innerWidth <= 1440) {
+      this.maxParticles = 175000;
+    } else {
+      this.maxParticles = 250000;
+    }
+
     this.nbParticles = 0;
 
     // Particle settings
