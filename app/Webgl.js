@@ -21,7 +21,7 @@ export default class Webgl {
     };
 
     this.camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
-    this.camera.position.z = 600;
+    this.camera.position.z = 200;
     this.target = new THREE.Vector3();
     this.camera.lookAt(this.target);
 
@@ -77,8 +77,8 @@ export default class Webgl {
     // this.blendPass.params.tInput2 = this.lineScene.renderTarget;
   }
 
-  transitionIn(fromPos, toPos, t, duration) {
-    this.camera.position.z = (1 - (t / duration)) * fromPos + (t / duration) * toPos;
+  start() {
+    this.particleSphere.start();
   }
 
   resize(width, height) {
@@ -114,9 +114,9 @@ export default class Webgl {
     // Update all the things
     //
     this.tick += 0.1;
-    if (this.camera.position.z > 200) {
-      this.transitionIn(600, 200, 0.5 * this.tick, 5);
-    }
+    // if (this.camera.position.z > 200) {
+    //   this.transitionIn(600, 200, 0.5 * this.tick, 5);
+    // }
 
     if (this.params.controls) {
       this.updateControls();

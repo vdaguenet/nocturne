@@ -40,6 +40,7 @@ function start() {
   started = true;
 
   soundAnalyser.play();
+  webgl.start();
   animate();
 
   $home.style.opacity = 0;
