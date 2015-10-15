@@ -85,7 +85,6 @@ domready(() => {
   // Sound analyser
   soundAnalyser = new SoundAnalyser('../assets/sounds/chopin_nocturne.mp3');
 
-
   // GUI settings
   gui = new dat.GUI();
   const fPostProc = gui.addFolder('Postprocessing');
@@ -103,12 +102,15 @@ domready(() => {
   fSystem.add(webgl.particleSystem, 'spawnRate');
   fSystem.add(webgl.particleSystem, 'horizontalSpeed').min(0).max(3);
   fSystem.add(webgl.particleSystem, 'verticalSpeed').min(0).max(3);
-  fSystem.add(webgl.particleSystem, 'xRadius').min(40).max(100);
-  fSystem.add(webgl.particleSystem, 'yRadius').min(40).max(100);
-  fSystem.add(webgl.particleSystem, 'zRadius').min(40).max(100);
+  fSystem.add(webgl.particleSystem, 'maxVelocityX').min(0).max(3);
+  fSystem.add(webgl.particleSystem, 'maxVelocityY').min(0).max(3);
+  fSystem.add(webgl.particleSystem, 'xRadius').min(40).max(200);
+  fSystem.add(webgl.particleSystem, 'yRadius').min(40).max(200);
+  fSystem.add(webgl.particleSystem, 'zRadius').min(40).max(200);
   const fSound = gui.addFolder('Sound');
   fSound.add(soundAnalyser.gainNode.gain, 'value', 0, 20).name('volume');
   gui.add(webgl.params, 'controls');
+  gui.close();
 
   // handle resize
   window.addEventListener('resize', resizeHandler);

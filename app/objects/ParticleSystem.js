@@ -1,39 +1,25 @@
-/**
- * Result is not good enough.
- * Work is started and need to be continued. But not for this project :(
- */
 import THREE from 'three';
 const glslify = require('glslify');
-
-const initialValues = {
-  maxParticles: 250000,
-  life: 2.0,
-  size: 1.0,
-  spawnRate: 400,
-  horizontalSpeed: 0.8,
-  verticalSpeed: 0.8,
-  xRadius: 80,
-  yRadius: 40,
-  zRadius: 120,
-};
 
 export default class ParticleSystem extends THREE.Object3D {
   constructor() {
     super();
 
     // Counters
-    this.maxParticles = initialValues.maxParticles;
+    this.maxParticles = 250000;
     this.nbParticles = 0;
 
     // Particle settings
-    this.life = initialValues.life;
-    this.size = initialValues.size;
-    this.spawnRate = initialValues.spawnRate;
-    this.horizontalSpeed = initialValues.horizontalSpeed;
-    this.verticalSpeed = initialValues.verticalSpeed;
-    this.xRadius = initialValues.xRadius;
-    this.yRadius = initialValues.yRadius;
-    this.zRadius = initialValues.zRadius;
+    this.life = 2.0;
+    this.size = 1.0;
+    this.spawnRate = 400;
+    this.horizontalSpeed = 0.8;
+    this.verticalSpeed = 0.8;
+    this.maxVelocityX = 0.3;
+    this.maxVelocityY = 0.6;
+    this.xRadius = 80;
+    this.yRadius = 40;
+    this.zRadius = 120;
     this.startTime = 0.0;
     this.velocity = new THREE.Vector3(0, 0, 0);
     this.pos = new THREE.Vector3(0, 0, 0);
@@ -116,9 +102,9 @@ export default class ParticleSystem extends THREE.Object3D {
     this.pos.y = Math.sin(t * this.verticalSpeed) * (this.yRadius + s);
     this.pos.z = Math.sin(t) * this.zRadius;
 
-    this.velocity.x = Math.sin((t + s) * this.horizontalSpeed);
-    this.velocity.y = Math.cos((t + s) * this.verticalSpeed);
-    this.velocity.z = (Math.sin((t + s) * this.horizontalSpeed) + Math.cos((t + s) * this.verticalSpeed));
+    this.velocity.x = Math.sin((t + s) * this.maxVelocityX);
+    this.velocity.y = Math.cos((t + s) * this.maxVelocityY);
+    this.velocity.z = (Math.sin((t + s) * this.maxVelocityX) + Math.cos((t + s) * this.maxVelocityY));
 
     for (let x = 0; x < this.spawnRate * s; x++) {
       this.spawnParticle();

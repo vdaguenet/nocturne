@@ -20,7 +20,7 @@ export default class SoundAnalyser {
     this.gainNode.connect(this.analyser);
     this.analyser.connect(this.context.destination);
 
-    this.gainNode.gain.value = 5;//5;
+    this.gainNode.gain.value = 5;
 
     this.start = 0;
 

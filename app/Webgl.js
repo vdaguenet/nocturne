@@ -125,7 +125,6 @@ export default class Webgl {
     this.particleSphere.update(this.tick, averageFreq);
     this.particleSystem.update(this.tick, averageFreq);
 
-
     //
     // Render
     //

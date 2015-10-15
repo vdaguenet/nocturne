@@ -1,7 +1,7 @@
 {
-  "name": "threejs-starter",
+  "name": "nocturne",
   "version": "1.0.0",
-  "description": "THREE.js Starter Kit",
+  "description": "Project for the creative dev workshop of Gobelins",
   "main": "build/main.js",
   "scripts": {
     "start": "npm run dev:script & npm run dev:server",
