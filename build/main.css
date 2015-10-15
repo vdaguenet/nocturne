@@ -1,23 +1,23 @@
 @font-face {
   font-family: 'Alex Brush';
-  src: url('/assets/fonts/alexbrush/alexbrush.eot');
-  src: url('/assets/fonts/alexbrush/alexbrush.eot?#iefix') format('embedded-opentype'),
-       url('/assets/fonts/alexbrush/alexbrush.woff2') format('woff2'),
-       url('/assets/fonts/alexbrush/alexbrush.woff') format('woff'),
-       url('/assets/fonts/alexbrush/alexbrush.ttf') format('truetype'),
-       url('/assets/fonts/alexbrush/alexbrush.svg#alex_brushregular') format('svg');
+  src: url('../assets/fonts/alexbrush/alexbrush.eot');
+  src: url('../assets/fonts/alexbrush/alexbrush.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/alexbrush/alexbrush.woff2') format('woff2'),
+       url('../assets/fonts/alexbrush/alexbrush.woff') format('woff'),
+       url('../assets/fonts/alexbrush/alexbrush.ttf') format('truetype'),
+       url('../assets/fonts/alexbrush/alexbrush.svg#alex_brushregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'moonlight';
-  src: url('/assets/fonts/moon/moon_light.eot');
-  src: url('/assets/fonts/moon/moon_light.eot?#iefix') format('embedded-opentype'),
-       url('/assets/fonts/moon/moon_light.woff2') format('woff2'),
-       url('/assets/fonts/moon/moon_light.woff') format('woff'),
-       url('/assets/fonts/moon/moon_light.ttf') format('truetype'),
-       url('/assets/fonts/moon/moon_light.svg#moonlight') format('svg');
+  src: url('../assets/fonts/moon/moon_light.eot');
+  src: url('../assets/fonts/moon/moon_light.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/moon/moon_light.woff2') format('woff2'),
+       url('../assets/fonts/moon/moon_light.woff') format('woff'),
+       url('../assets/fonts/moon/moon_light.ttf') format('truetype'),
+       url('../assets/fonts/moon/moon_light.svg#moonlight') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -56,7 +56,9 @@ a:hover {
 .home {
   width: 100%;
   height: 100%;
-  background: #262626;
+  background: url('../assets/home.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   position: absolute;
   top: 0;
   left: 0;

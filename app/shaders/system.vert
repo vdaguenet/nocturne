@@ -1,7 +1,6 @@
 #pragma glslify: pnoise = require(glsl-noise/periodic/3d.glsl)
 
 uniform float time;
-uniform vec2 resolution;
 
 attribute vec3 velocity;
 attribute float startTime;
@@ -36,12 +35,7 @@ void main() {
   float noise = pnoise( velocity * timeOnLife, vec3( 1000.0 ) );
   float displacement = 10. * noise + (30. * timeOnLife * turb);
 
-  // float displacement = 1. * noise + 30. * turb * (sin(timeOnLife) + noise);
-
   newPosition = position + velocity * displacement;
-  // newPosition = position + velocity;
-  // newPosition = mix(newPosition, newPosition + vec3(displacement) , timeOnLife);
-
 
   if( gl_PointSize < .05 ) {
     lifeLeft = 0.;

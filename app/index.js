@@ -11,15 +11,14 @@ let started = false;
 let webgl;
 let gui;
 let soundAnalyser;
-let freq;
-let time;
+let freq = 0;
+let time = 0;
 let refRaf;
 let $play;
 let $home;
 
 function resizeHandler() {
   webgl.resize(window.innerWidth, window.innerHeight);
-  //merci à Madj et Robin pour l'aide <3
 }
 
 function animate() {
@@ -35,10 +34,12 @@ function animate() {
 function start() {
   if (!webglReady || !soundReady || started) { return; }
 
-  started = true;
   console.debug('[App] start');
+  started = true;
+
   soundAnalyser.play();
   animate();
+
   $home.style.opacity = 0;
   $home.style.visibility = 'hidden';
 }
@@ -67,21 +68,21 @@ function end() {
 }
 
 domready(() => {
-  $play = document.querySelector('#play');
-  $play.addEventListener('click', start);
-
-  $home = document.querySelector('.home');
-
   Mediator.once('sound:ready', onSoundReady);
   Mediator.once('sound:end', end);
   Mediator.once('webgl:ready', onWebglReady);
 
-  // Sound analyser
-  soundAnalyser = new SoundAnalyser('../assets/sounds/chopin_nocturne.mp3');
+  $play = document.querySelector('#play');
+  $play.addEventListener('click', start);
 
+  $home = document.querySelector('.home');
   // webgl settings
   webgl = new Webgl(window.innerWidth, window.innerHeight);
   document.body.appendChild(webgl.renderer.domElement);
+
+  // Sound analyser
+  soundAnalyser = new SoundAnalyser('../assets/sounds/chopin_nocturne.mp3');
+
 
   // GUI settings
   gui = new dat.GUI();
