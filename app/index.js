@@ -85,7 +85,7 @@ domready(() => {
   document.body.appendChild(webgl.renderer.domElement);
 
   // Sound analyser
-  soundAnalyser = new SoundAnalyser('../assets/sounds/chopin_nocturne.mp3');
+  soundAnalyser = new SoundAnalyser('assets/sounds/chopin_nocturne.mp3');
 
   // GUI settings
   gui = new dat.GUI();
